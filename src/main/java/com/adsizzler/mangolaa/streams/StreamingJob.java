@@ -64,37 +64,37 @@ public class StreamingJob {
 
 		//Windowed Stream
 		val bidReqWindowedStream = bidReqStream
-								.keyBy(new AggregatedBidReqKey())
-								.timeWindow(Time.minutes(1));
+						.keyBy(new AggregatedBidReqKey())
+						.timeWindow(Time.minutes(1));
 
 		val bidRespWindowedStream = bidRespStream
-								.keyBy(new AggregatedBidRespKey())
-								.timeWindow(Time.minutes(1));
+						.keyBy(new AggregatedBidRespKey())
+						.timeWindow(Time.minutes(1));
 
 		val winNotificationWindowedStream = winNotificationStream
-								.keyBy(new AggregatedWinNotificationKey())
-								.timeWindow(Time.minutes(1));
+						.keyBy(new AggregatedWinNotificationKey())
+						.timeWindow(Time.minutes(1));
 
 		val impressionWindowedStream = impressionStream
-								.keyBy(new AggregatedImpressionKey())
-								.timeWindow(Time.minutes(1));
+						.keyBy(new AggregatedImpressionKey())
+						.timeWindow(Time.minutes(1));
 
 		// Aggregated Streams
 		val aggregatedBidReqStream = bidReqWindowedStream
-								.apply(new BidReqWindowCountFunction())
-								.name("Count Bid Requests in a Windowed Stream");
+						.apply(new BidReqWindowCountFunction())
+						.name("Count Bid Requests in a Windowed Stream");
 
 		val aggregatedBidRespStream = bidRespWindowedStream
-								.apply(new BidRespWindowCountFunction())
-								.name("Count Bid Responses in a Windowed Stream");
+						.apply(new BidRespWindowCountFunction())
+						.name("Count Bid Responses in a Windowed Stream");
 
 		val aggregatedWinStream = winNotificationWindowedStream
-								.apply(new WinNotificationCountFunction())
-								.name("Counting WinNotifications in a Windowed Stream");
+						.apply(new WinNotificationCountFunction())
+						.name("Counting WinNotifications in a Windowed Stream");
 
 		val aggregatedImpressionStream = impressionWindowedStream
-								.apply(new ImpressionCountFunction())
-								.name("Counting Impression in a Windowed Stream");
+						.apply(new ImpressionCountFunction())
+						.name("Counting Impression in a Windowed Stream");
 
 		//Serializers for Aggregated objects
 		val aggregatedBidReqJsonSerializer = new JsonSerializer<AggregatedBidReq>();
@@ -114,7 +114,7 @@ public class StreamingJob {
 		aggregatedWinStream.addSink(aggregatedWinKafkaSink);
 		aggregatedImpressionStream.addSink(aggregatedImpressionKafkaSink);
 
-     	//execute program
+     		//execute program
 		flinkEnv.execute("Count events in a time window for the Mangolaa platform");
 	}
 
