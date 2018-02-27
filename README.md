@@ -3,6 +3,9 @@
 Welcome. This is the stream processing module for Mangolaa platform. We stream events (BidReq, BidResp, Wins etc) from Apache Kafka. Data is aggregated(counted) every minute using Apache Flink's DataStream API. Aggregated Counts are then pushed to Kafka, and saved to MySQL via a [Kafka Consumer](https://github.com/Adsizzlerlabs/mangolaa-kafkaconsumer-aggregations)
 
 
+Serialization for Aggregated Objects : `JSON`
+  
+
 ## BidRequest
 
 Data format : JSON string compressed using gzip compression
@@ -16,7 +19,6 @@ Aggregated Object :
 3. minute : ZonedDateTime
 4. count : int 
 5. sourceId : int
-
 
 
 ## BidResponse
