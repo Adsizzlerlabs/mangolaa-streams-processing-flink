@@ -54,7 +54,23 @@ Aggregated Object :
 7. creativeId : int
 
 
-## Impressions and Billing
+## Impressions and Billing notifications(billing notifications only for Open RTB 2.5)
+
+Data format : JSON string compressed using gzip compression
+
+Key : AdvId, Source Id(id of the SSP or publisher), clientId (the id of the client in the system), campaignId, creativeId, minute( the timestamp of the bid req rounded off to the minute).
+
+Aggregated Object :
+
+1. adv Id : int
+2. client Id : int
+3. minute : ZonedDateTime
+4. count : int 
+5. sourceId : int
+6. campaignId : int
+7. creativeId : int
+
+## Clicks
 
 Data format : JSON string compressed using gzip compression
 
