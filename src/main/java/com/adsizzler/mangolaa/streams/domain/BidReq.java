@@ -1,9 +1,9 @@
 package com.adsizzler.mangolaa.streams.domain;
 
+import com.adsizzler.mangolaa.streams.jackson.deserializers.ZonedDateTimeDeserializer;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.adsizzler.mangolaa.streams.jackson.deserializers.ZonedDateTimeDeserializer;
 import lombok.Data;
 import lombok.ToString;
 

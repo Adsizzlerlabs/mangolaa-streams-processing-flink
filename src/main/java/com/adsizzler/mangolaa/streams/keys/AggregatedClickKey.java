@@ -1,6 +1,5 @@
 package com.adsizzler.mangolaa.streams.keys;
 
-import com.adsizzler.mangolaa.streams.domain.BidResp;
 import com.adsizzler.mangolaa.streams.domain.Click;
 import com.adsizzler.mangolaa.streams.utils.TimeUtil;
 import lombok.val;

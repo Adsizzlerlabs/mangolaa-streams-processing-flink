@@ -1,9 +1,9 @@
 package com.adsizzler.mangolaa.streams.jackson.deserializers;
 
+import com.adsizzler.mangolaa.streams.utils.Strings;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
-import com.adsizzler.mangolaa.streams.utils.Strings;
 import lombok.val;
 
 import java.io.IOException;

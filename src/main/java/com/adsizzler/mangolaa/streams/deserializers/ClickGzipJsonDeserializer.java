@@ -1,7 +1,5 @@
 package com.adsizzler.mangolaa.streams.deserializers;
 
-import com.adsizzler.mangolaa.streams.domain.BidReq;
-import com.adsizzler.mangolaa.streams.domain.BidResp;
 import com.adsizzler.mangolaa.streams.domain.Click;
 import com.adsizzler.mangolaa.streams.utils.Gzip;
 import com.adsizzler.mangolaa.streams.utils.Json;

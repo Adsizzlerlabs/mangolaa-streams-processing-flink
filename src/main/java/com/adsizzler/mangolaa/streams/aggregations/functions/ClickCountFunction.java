@@ -1,10 +1,6 @@
 package com.adsizzler.mangolaa.streams.aggregations.functions;
 
-import com.adsizzler.mangolaa.streams.aggregations.AggregatedBidReq;
-import com.adsizzler.mangolaa.streams.aggregations.AggregatedBidResp;
 import com.adsizzler.mangolaa.streams.aggregations.AggregatedClick;
-import com.adsizzler.mangolaa.streams.aggregations.AggregatedImpression;
-import com.adsizzler.mangolaa.streams.domain.BidResp;
 import com.adsizzler.mangolaa.streams.domain.Click;
 import lombok.val;
 import org.apache.flink.api.java.tuple.Tuple6;

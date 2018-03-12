@@ -1,7 +1,7 @@
 package com.adsizzler.mangolaa.streams.aggregations;
 
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.adsizzler.mangolaa.streams.jackson.serializers.ZonedDateTimeSerializer;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.Builder;
 import lombok.Data;
 import org.apache.flink.shaded.jackson2.com.fasterxml.jackson.annotation.JsonProperty;
