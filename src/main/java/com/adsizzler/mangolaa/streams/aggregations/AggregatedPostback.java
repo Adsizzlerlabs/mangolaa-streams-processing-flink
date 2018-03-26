@@ -1,21 +1,19 @@
-package com.adsizzler.mangolaa.streams.domain;
+package com.adsizzler.mangolaa.streams.aggregations;
 
-import com.adsizzler.mangolaa.streams.jackson.deserializers.ZonedDateTimeDeserializer;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.adsizzler.mangolaa.streams.jackson.serializers.ZonedDateTimeSerializer;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import lombok.Builder;
 import lombok.Data;
-import lombok.ToString;
 
 import java.time.ZonedDateTime;
 
 /**
  * Created by ankushsharma on 26/03/18.
  */
-@JsonIgnoreProperties(ignoreUnknown = true)
-@ToString
 @Data
-public class Conversion {
+@Builder
+public class AggregatedPostback {
 
     @JsonProperty(value = "advId", required = true)
     private final Integer advId;
@@ -32,14 +30,13 @@ public class Conversion {
     @JsonProperty(value = "creativeId", required = true)
     private final Integer creativeId;
 
-    @JsonProperty(value = "eventCode", required = true)
-    private final Integer eventCode;
+    @JsonProperty(value = "count", required = true)
+    private final Integer count;
+
+    @JsonProperty(value = "timestamp", required = true)
+    @JsonSerialize(using = ZonedDateTimeSerializer.class)
+    private final ZonedDateTime timestamp;
 
     @JsonProperty(value = "event", required = true)
     private final String event;
-
-    @JsonProperty(value = "timestamp", required = true)
-    @JsonDeserialize(using = ZonedDateTimeDeserializer.class)
-    private final ZonedDateTime timestamp;
-
 }

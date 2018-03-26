@@ -11,6 +11,7 @@ public class KafkaTopics {
     public static final String IMPRESSIONS = "impressions";
     public static final String CLICKS = "clicks";
     public static final String CONVERSIONS = "conversions";
+    public static final String POSTBACKS = "postbacks";
 
 
     //Aggregations
@@ -20,6 +21,7 @@ public class KafkaTopics {
     public static final String AGGREGATED_IMPRESSIONS = "aggregated_impressions";
     public static final String AGGREGATED_CLICKS = "aggregated_clicks";
     public static final String AGGREGATED_CONVERSIONS = "aggregated_conversions";
+    public static final String AGGREGATED_POSTBACKS = "aggregated_postbacks";
 
 
 }

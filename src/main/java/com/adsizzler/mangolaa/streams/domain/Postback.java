@@ -15,7 +15,7 @@ import java.time.ZonedDateTime;
 @JsonIgnoreProperties(ignoreUnknown = true)
 @ToString
 @Data
-public class Conversion {
+public class Postback {
 
     @JsonProperty(value = "advId", required = true)
     private final Integer advId;
@@ -31,9 +31,6 @@ public class Conversion {
 
     @JsonProperty(value = "creativeId", required = true)
     private final Integer creativeId;
-
-    @JsonProperty(value = "eventCode", required = true)
-    private final Integer eventCode;
 
     @JsonProperty(value = "event", required = true)
     private final String event;

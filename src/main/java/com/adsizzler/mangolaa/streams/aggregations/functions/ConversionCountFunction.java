@@ -3,7 +3,7 @@ package com.adsizzler.mangolaa.streams.aggregations.functions;
 import com.adsizzler.mangolaa.streams.aggregations.AggregatedConversion;
 import com.adsizzler.mangolaa.streams.domain.Conversion;
 import lombok.val;
-import org.apache.flink.api.java.tuple.Tuple7;
+import org.apache.flink.api.java.tuple.Tuple8;
 import org.apache.flink.shaded.guava18.com.google.common.collect.Iterables;
 import org.apache.flink.streaming.api.functions.windowing.WindowFunction;
 import org.apache.flink.streaming.api.windowing.windows.TimeWindow;
@@ -14,11 +14,11 @@ import java.time.ZonedDateTime;
 /**
  * Created by ankushsharma on 26/03/18.
  */
-public class ConversionCountFunction implements WindowFunction<Conversion, AggregatedConversion, Tuple7<Integer, Integer, Integer,Integer, Integer, Integer, ZonedDateTime>, TimeWindow> {
+public class ConversionCountFunction implements WindowFunction<Conversion, AggregatedConversion, Tuple8<Integer, Integer, Integer, Integer, Integer, Integer, ZonedDateTime, String>, TimeWindow> {
 
     @Override
     public void apply(
-            final Tuple7<Integer, Integer, Integer, Integer, Integer, Integer, ZonedDateTime> keys,
+            final Tuple8<Integer, Integer, Integer, Integer, Integer, Integer, ZonedDateTime, String> keys,
             final TimeWindow timeWindow,
             final Iterable<Conversion> conversions,
             final Collector<AggregatedConversion> collector
@@ -32,6 +32,8 @@ public class ConversionCountFunction implements WindowFunction<Conversion, Aggre
         val creativeId = (Integer) keys.getField(4);
         val eventCode = (Integer) keys.getField(5);
         val minute = (ZonedDateTime) keys.getField(6);
+        val event = (String) keys.getField(7);
+
         val count = Iterables.size(conversions);
 
         val aggregation = AggregatedConversion
@@ -43,6 +45,7 @@ public class ConversionCountFunction implements WindowFunction<Conversion, Aggre
                                 .creativeId(creativeId)
                                 .timestamp(minute)
                                 .eventCode(eventCode)
+                                .event(event)
                                 .count(count)
                             .build();
 
