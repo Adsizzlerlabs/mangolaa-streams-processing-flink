@@ -1,10 +1,10 @@
 package com.adsizzler.mangolaa.streams.aggregations;
 
 import com.adsizzler.mangolaa.streams.jackson.serializers.ZonedDateTimeSerializer;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.Builder;
 import lombok.Data;
-import org.apache.flink.shaded.jackson2.com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.time.ZonedDateTime;
 

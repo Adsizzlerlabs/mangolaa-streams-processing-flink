@@ -1,6 +1,8 @@
 package com.adsizzler.mangolaa.streams.deserializers;
 
+import com.adsizzler.mangolaa.streams.domain.BidReq;
 import com.adsizzler.mangolaa.streams.domain.Click;
+import com.adsizzler.mangolaa.streams.domain.Conversion;
 import com.adsizzler.mangolaa.streams.utils.Gzip;
 import com.adsizzler.mangolaa.streams.utils.Json;
 import lombok.extern.slf4j.Slf4j;
@@ -12,34 +14,34 @@ import java.io.IOException;
 import java.util.Objects;
 
 /**
- * Created by ankushsharma on 12/03/18.
+ * Created by ankushsharma on 26/03/18.
  */
 @Slf4j
-public class ClickGzipJsonDeserializer implements DeserializationSchema<Click> {
+public class ConversionGzipJsonDeserializer implements DeserializationSchema<Conversion> {
 
     @Override
-    public Click deserialize(byte[] bytes) throws IOException {
-        Click click = null;
+    public Conversion deserialize(byte[] bytes) throws IOException {
+        Conversion conversion = null;
         if(Objects.nonNull(bytes)){
             try {
                 val json = Gzip.decompress(bytes);
-                click = Json.toObject(json, Click.class);
+                conversion = Json.toObject(json, Conversion.class);
             }
             catch (final Exception e) {
                 log.error("", e.getMessage());
             }
 
         }
-        return click;
+        return conversion;
     }
 
     @Override
-    public boolean isEndOfStream(final Click click) {
+    public boolean isEndOfStream(final Conversion conversion) {
         return false;
     }
 
     @Override
-    public TypeInformation<Click> getProducedType() {
-        return TypeInformation.of(Click.class);
+    public TypeInformation<Conversion> getProducedType() {
+        return TypeInformation.of(Conversion.class);
     }
 }

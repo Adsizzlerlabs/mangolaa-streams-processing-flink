@@ -9,11 +9,11 @@ import lombok.Data;
 import java.time.ZonedDateTime;
 
 /**
- * Created by ankushsharma on 23/02/18.
+ * Created by ankushsharma on 26/03/18.
  */
 @Data
 @Builder
-public class AggregatedBidResp {
+public class AggregatedConversion {
 
     @JsonProperty(value = "advId", required = true)
     private final Integer advId;
@@ -36,5 +36,8 @@ public class AggregatedBidResp {
     @JsonProperty(value = "timestamp", required = true)
     @JsonSerialize(using = ZonedDateTimeSerializer.class)
     private final ZonedDateTime timestamp;
+
+    @JsonProperty(value = "eventCode", required = true)
+    private final Integer eventCode;
 
 }

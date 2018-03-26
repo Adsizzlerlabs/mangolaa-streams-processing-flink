@@ -1,9 +1,9 @@
 package com.adsizzler.mangolaa.streams.aggregations.functions;
 
-import com.adsizzler.mangolaa.streams.aggregations.AggregatedClick;
-import com.adsizzler.mangolaa.streams.domain.Click;
+import com.adsizzler.mangolaa.streams.aggregations.AggregatedConversion;
+import com.adsizzler.mangolaa.streams.domain.Conversion;
 import lombok.val;
-import org.apache.flink.api.java.tuple.Tuple12;
+import org.apache.flink.api.java.tuple.Tuple7;
 import org.apache.flink.shaded.guava18.com.google.common.collect.Iterables;
 import org.apache.flink.streaming.api.functions.windowing.WindowFunction;
 import org.apache.flink.streaming.api.windowing.windows.TimeWindow;
@@ -12,18 +12,18 @@ import org.apache.flink.util.Collector;
 import java.time.ZonedDateTime;
 
 /**
- * Created by ankushsharma on 12/03/18.
+ * Created by ankushsharma on 26/03/18.
  */
-public class ClickCountFunction implements WindowFunction<Click, AggregatedClick, Tuple12<Integer, Integer, Integer, Integer, Integer, Integer, ZonedDateTime, String, String, String, String, String>, TimeWindow> {
+public class ConversionCountFunction implements WindowFunction<Conversion, AggregatedConversion, Tuple7<Integer, Integer, Integer,Integer, Integer, Integer, ZonedDateTime>, TimeWindow> {
 
     @Override
     public void apply(
-            final Tuple12<Integer, Integer, Integer, Integer, Integer, Integer, ZonedDateTime, String, String, String, String, String> keys,
+            final Tuple7<Integer, Integer, Integer, Integer, Integer, Integer, ZonedDateTime> keys,
             final TimeWindow timeWindow,
-            final Iterable<Click> clicks,
-            final Collector<AggregatedClick> collector
+            final Iterable<Conversion> conversions,
+            final Collector<AggregatedConversion> collector
     )
-    throws Exception
+     throws Exception
     {
         val advId = (Integer) keys.getField(0);
         val sourceId = (Integer) keys.getField(1);
@@ -32,16 +32,9 @@ public class ClickCountFunction implements WindowFunction<Click, AggregatedClick
         val creativeId = (Integer) keys.getField(4);
         val eventCode = (Integer) keys.getField(5);
         val minute = (ZonedDateTime) keys.getField(6);
+        val count = Iterables.size(conversions);
 
-        val city = (String) keys.getField(7);
-        val country = (String) keys.getField(8);
-        val province = (String) keys.getField(9);
-        val carrier = (String) keys.getField(10);
-        val platform = (String) keys.getField(11);
-
-        val count = Iterables.size(clicks);
-
-        val aggregation = AggregatedClick
+        val aggregation = AggregatedConversion
                             .builder()
                                 .advId(advId)
                                 .sourceId(sourceId)
@@ -50,15 +43,9 @@ public class ClickCountFunction implements WindowFunction<Click, AggregatedClick
                                 .creativeId(creativeId)
                                 .timestamp(minute)
                                 .eventCode(eventCode)
-                                .city(city)
-                                .country(country)
-                                .province(province)
-                                .carrier(carrier)
-                                .platform(platform)
                                 .count(count)
                             .build();
 
         collector.collect(aggregation);
     }
-
 }

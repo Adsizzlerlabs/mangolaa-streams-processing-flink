@@ -1,10 +1,10 @@
 package com.adsizzler.mangolaa.streams.aggregations;
 
 import com.adsizzler.mangolaa.streams.jackson.serializers.ZonedDateTimeSerializer;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.Builder;
 import lombok.Data;
-import org.apache.flink.shaded.jackson2.com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.time.ZonedDateTime;
 
@@ -36,5 +36,23 @@ public class AggregatedClick {
     @JsonProperty(value = "timestamp", required = true)
     @JsonSerialize(using = ZonedDateTimeSerializer.class)
     private final ZonedDateTime timestamp;
+
+    @JsonProperty(value = "eventCode", required = true)
+    private final Integer eventCode;
+
+    @JsonProperty(value = "city", required = true)
+    private final String city;
+
+    @JsonProperty(value = "country", required = true)
+    private final String country;
+
+    @JsonProperty(value = "province", required = true)
+    private final String province;
+
+    @JsonProperty(value = "platform", required = true)
+    private final String platform;
+
+    @JsonProperty(value = "carrier", required = true)
+    private final String carrier;
 
 }

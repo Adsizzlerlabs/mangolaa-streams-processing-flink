@@ -32,6 +32,25 @@ public class Click {
     @JsonProperty(value = "creativeId", required = true)
     private final Integer creativeId;
 
+    @JsonProperty(value = "eventCode", required = true)
+    private final Integer eventCode;
+
+    @JsonProperty(value = "city", required = true)
+    private final String city;
+
+    @JsonProperty(value = "country", required = true)
+    private final String country;
+
+    @JsonProperty(value = "province", required = true)
+    private final String province;
+
+    @JsonProperty(value = "platform", required = true)
+    private final String platform;
+
+    @JsonProperty(value = "carrier", required = true)
+    private final String carrier;
+
+
     @JsonProperty(value = "timestamp", required = true)
     @JsonDeserialize(using = ZonedDateTimeDeserializer.class)
     private final ZonedDateTime timestamp;

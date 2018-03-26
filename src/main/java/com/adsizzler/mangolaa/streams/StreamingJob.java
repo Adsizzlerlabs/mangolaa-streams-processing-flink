@@ -34,6 +34,7 @@ public class StreamingJob {
 		val winNotificationGzipJsonDeserializer = new WinNotificationGzipJsonDeserializer();
 		val impressionGzipJsonDeserializer = new ImpressionGzipJsonDeserializer();
 		val clickGzipJsonDeserializer = new ClickGzipJsonDeserializer();
+		val conversionGzipJsonDeserializer = new ConversionGzipJsonDeserializer();
 
 		//Kafka v 0.11 is the source of the stream
 		val bidReqKafkaConsumer  = new FlinkKafkaConsumer011<BidReq>(KafkaTopics.BID_REQ, bidReqGzipJsonDeserializer, kafkaProperties());
@@ -41,6 +42,7 @@ public class StreamingJob {
 		val winNotificationKafkaConsumer = new FlinkKafkaConsumer011<WinNotification>(KafkaTopics.WINS, winNotificationGzipJsonDeserializer, kafkaProperties());
 		val impressionsKafkaConsumer = new FlinkKafkaConsumer011<Impression>(KafkaTopics.IMPRESSIONS, impressionGzipJsonDeserializer, kafkaProperties());
 		val clicksKafkaConsumer = new FlinkKafkaConsumer011<Click>(KafkaTopics.CLICKS, clickGzipJsonDeserializer, kafkaProperties());
+		val conversionsKafkaConsumer = new FlinkKafkaConsumer011<Conversion>(KafkaTopics.CONVERSIONS, conversionGzipJsonDeserializer, kafkaProperties());
 
 		//Streams
 		val bidReqStream = flinkEnv.addSource(bidReqKafkaConsumer);
@@ -48,6 +50,8 @@ public class StreamingJob {
 		val winNotificationStream = flinkEnv.addSource(winNotificationKafkaConsumer);
 		val impressionStream = flinkEnv.addSource(impressionsKafkaConsumer);
 		val clickStream = flinkEnv.addSource(clicksKafkaConsumer);
+		val conversionStream = flinkEnv.addSource(conversionsKafkaConsumer);
+
 
 		//Windowed Stream
 		val bidReqWindowedStream = bidReqStream
@@ -70,6 +74,9 @@ public class StreamingJob {
 						.keyBy(new AggregatedClickKey())
 						.timeWindow(Time.minutes(1));
 
+		val conversionWindowedStream = conversionStream
+						.keyBy(new AggregatedConversionKey())
+						.timeWindow(Time.minutes(1));
 
 		// Aggregated Streams
 		val aggregatedBidReqStream = bidReqWindowedStream
@@ -92,12 +99,17 @@ public class StreamingJob {
 						.apply(new ClickCountFunction())
 						.name("Counting Clicks in a Windowed Stream");
 
+		val aggregatedConversionStream = conversionWindowedStream
+						.apply(new ConversionCountFunction())
+						.name("Counting Conversions in a Windowed Stream");
+
 		//Serializers for Aggregated objects
 		val aggregatedBidReqJsonSerializer = new JsonSerializer<AggregatedBidReq>();
 		val aggregatedBidRespJsonSerializer = new JsonSerializer<AggregatedBidResp>();
 		val aggregatedWinNotificationJsonSerializer =  new JsonSerializer<AggregatedWin>();
 		val aggregatedImpressionJsonSerializer = new JsonSerializer<AggregatedImpression>();
 		val aggregatedClickJsonSerializer = new JsonSerializer<AggregatedClick>();
+		val aggregatedConversionJsonSerializer = new JsonSerializer<AggregatedConversion>();
 
 		//Sinks for Aggregated objects
 		val aggregatedBidReqKafkaSink = new FlinkKafkaProducer011<AggregatedBidReq>(KafkaTopics.AGGREGATED_BID_REQ, aggregatedBidReqJsonSerializer, kafkaProperties());
@@ -105,6 +117,7 @@ public class StreamingJob {
 		val aggregatedWinKafkaSink = new FlinkKafkaProducer011<AggregatedWin>(KafkaTopics.AGGREGATED_WINS, aggregatedWinNotificationJsonSerializer, kafkaProperties());
 		val aggregatedImpressionKafkaSink = new FlinkKafkaProducer011<AggregatedImpression>(KafkaTopics.AGGREGATED_IMPRESSIONS, aggregatedImpressionJsonSerializer, kafkaProperties());
 		val aggregatedClickKafkaSink = new FlinkKafkaProducer011<AggregatedClick>(KafkaTopics.AGGREGATED_CLICKS, aggregatedClickJsonSerializer, kafkaProperties());
+		val aggregatedConversionKafkaSink = new FlinkKafkaProducer011<AggregatedConversion>(KafkaTopics.AGGREGATED_CONVERSIONS, aggregatedConversionJsonSerializer, kafkaProperties());
 
 		//Attach sink to aggregated streams
 		aggregatedBidReqStream.addSink(aggregatedBidReqKafkaSink);
@@ -112,6 +125,7 @@ public class StreamingJob {
 		aggregatedWinStream.addSink(aggregatedWinKafkaSink);
 		aggregatedImpressionStream.addSink(aggregatedImpressionKafkaSink);
 		aggregatedClickStream.addSink(aggregatedClickKafkaSink);
+		aggregatedConversionStream.addSink(aggregatedConversionKafkaSink);
 
      		//execute program
 		flinkEnv.execute("Count events in a time window for the Mangolaa platform");

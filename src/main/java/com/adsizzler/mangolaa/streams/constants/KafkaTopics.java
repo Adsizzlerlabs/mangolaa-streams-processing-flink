@@ -10,6 +10,7 @@ public class KafkaTopics {
     public static final String WINS = "wins";
     public static final String IMPRESSIONS = "impressions";
     public static final String CLICKS = "clicks";
+    public static final String CONVERSIONS = "conversions";
 
 
     //Aggregations
@@ -18,6 +19,7 @@ public class KafkaTopics {
     public static final String AGGREGATED_WINS = "aggregated_wins";
     public static final String AGGREGATED_IMPRESSIONS = "aggregated_impressions";
     public static final String AGGREGATED_CLICKS = "aggregated_clicks";
+    public static final String AGGREGATED_CONVERSIONS = "aggregated_conversions";
 
 
 }
