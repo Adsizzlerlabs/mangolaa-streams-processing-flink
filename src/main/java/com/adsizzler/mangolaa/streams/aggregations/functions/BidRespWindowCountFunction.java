@@ -10,6 +10,7 @@ import org.apache.flink.streaming.api.windowing.windows.TimeWindow;
 import org.apache.flink.util.Collector;
 
 import java.time.ZonedDateTime;
+import java.util.UUID;
 
 /**
  * Created by ankushsharma on 23/02/18.
@@ -31,9 +32,11 @@ public class BidRespWindowCountFunction implements WindowFunction<BidResp, Aggre
         val minute = (ZonedDateTime) keys.getField(5);
 
         val count = Iterables.size(bidResponses);
+        val uuid = UUID.randomUUID();
 
         val aggregation = AggregatedBidResp
                             .builder()
+                                .uuid(uuid)
                                 .advId(advId)
                                 .sourceId(sourceId)
                                 .clientId(clientId)

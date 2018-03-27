@@ -10,6 +10,7 @@ import org.apache.flink.streaming.api.windowing.windows.TimeWindow;
 import org.apache.flink.util.Collector;
 
 import java.time.ZonedDateTime;
+import java.util.UUID;
 
 /**
  * Created by ankushsharma on 26/03/18.
@@ -34,18 +35,20 @@ public class PostbackWindowCountFunction implements WindowFunction<Postback, Agg
         val event = (String) keys.getField(6);
 
         val count = Iterables.size(postbacks);
+        val uuid = UUID.randomUUID();
 
         val aggregation = AggregatedPostback
-                .builder()
-                    .advId(advId)
-                    .sourceId(sourceId)
-                    .clientId(clientId)
-                    .campaignId(campaignId)
-                    .creativeId(creativeId)
-                    .timestamp(minute)
-                    .event(event)
-                    .count(count)
-                .build();
+                                .builder()
+                                    .uuid(uuid)
+                                    .advId(advId)
+                                    .sourceId(sourceId)
+                                    .clientId(clientId)
+                                    .campaignId(campaignId)
+                                    .creativeId(creativeId)
+                                    .timestamp(minute)
+                                    .event(event)
+                                    .count(count)
+                                .build();
 
         collector.collect(aggregation);
     }

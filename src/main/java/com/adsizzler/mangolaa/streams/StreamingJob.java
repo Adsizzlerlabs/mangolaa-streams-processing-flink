@@ -113,7 +113,6 @@ public class StreamingJob {
 						.apply(new PostbackWindowCountFunction())
 						.name("Counting Postback in a Windowed Stream");
 
-
 		//Serializers for Aggregated objects
 		val aggregatedBidReqJsonSerializer = new JsonSerializer<AggregatedBidReq>();
 		val aggregatedBidRespJsonSerializer = new JsonSerializer<AggregatedBidResp>();

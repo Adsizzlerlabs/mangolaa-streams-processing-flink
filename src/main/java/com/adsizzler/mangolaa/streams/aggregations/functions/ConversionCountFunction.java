@@ -10,6 +10,7 @@ import org.apache.flink.streaming.api.windowing.windows.TimeWindow;
 import org.apache.flink.util.Collector;
 
 import java.time.ZonedDateTime;
+import java.util.UUID;
 
 /**
  * Created by ankushsharma on 26/03/18.
@@ -35,9 +36,11 @@ public class ConversionCountFunction implements WindowFunction<Conversion, Aggre
         val event = (String) keys.getField(7);
 
         val count = Iterables.size(conversions);
+        val uuid = UUID.randomUUID();
 
         val aggregation = AggregatedConversion
                             .builder()
+                                .uuid(uuid)
                                 .advId(advId)
                                 .sourceId(sourceId)
                                 .clientId(clientId)

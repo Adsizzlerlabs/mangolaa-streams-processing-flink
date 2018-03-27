@@ -10,6 +10,7 @@ import org.apache.flink.streaming.api.windowing.windows.TimeWindow;
 import org.apache.flink.util.Collector;
 
 import java.time.ZonedDateTime;
+import java.util.UUID;
 
 /**
  * Count bid req in a WindowedStream
@@ -31,15 +32,17 @@ public class BidReqWindowCountFunction implements WindowFunction<BidReq, Aggrega
         val minute = (ZonedDateTime) keys.getField(3);
 
         val count = Iterables.size(bidReqs);
+        val uuid = UUID.randomUUID();
 
         val aggregation = AggregatedBidReq
-                .builder()
-                    .advId(advId)
-                    .sourceId(sourceId)
-                    .clientId(clientId)
-                    .timestamp(minute)
-                    .count(count)
-                .build();
+                                .builder()
+                                    .uuid(uuid)
+                                    .advId(advId)
+                                    .sourceId(sourceId)
+                                    .clientId(clientId)
+                                    .timestamp(minute)
+                                    .count(count)
+                                .build();
 
         collector.collect(aggregation);
     }

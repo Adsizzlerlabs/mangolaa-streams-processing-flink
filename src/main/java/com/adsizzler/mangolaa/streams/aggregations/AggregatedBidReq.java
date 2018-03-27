@@ -1,5 +1,6 @@
 package com.adsizzler.mangolaa.streams.aggregations;
 
+import com.adsizzler.mangolaa.streams.jackson.serializers.UUIDSerializer;
 import com.adsizzler.mangolaa.streams.jackson.serializers.ZonedDateTimeSerializer;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -7,6 +8,7 @@ import lombok.Builder;
 import lombok.Data;
 
 import java.time.ZonedDateTime;
+import java.util.UUID;
 
 /**
  * Created by ankushsharma on 23/02/18.
@@ -14,6 +16,10 @@ import java.time.ZonedDateTime;
 @Data
 @Builder
 public class AggregatedBidReq {
+
+    @JsonProperty(value = "uuid", required = true)
+    @JsonSerialize(using = UUIDSerializer.class)
+    private final UUID uuid;
 
     @JsonProperty(value = "advId", required = true)
     private final Integer advId;
@@ -30,7 +36,5 @@ public class AggregatedBidReq {
     @JsonProperty(value = "timestamp", required = true)
     @JsonSerialize(using = ZonedDateTimeSerializer.class)
     private final ZonedDateTime timestamp;
-
-
 
 }

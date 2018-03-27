@@ -10,6 +10,7 @@ import org.apache.flink.streaming.api.windowing.windows.TimeWindow;
 import org.apache.flink.util.Collector;
 
 import java.time.ZonedDateTime;
+import java.util.UUID;
 
 /**
  * Created by ankushsharma on 26/02/18.
@@ -30,17 +31,19 @@ public class ImpressionCountFunction implements WindowFunction<Impression, Aggre
         val minute = (ZonedDateTime) keys.getField(5);
 
         val count = Iterables.size(impressions);
+        val uuid = UUID.randomUUID();
 
         val aggregation = AggregatedImpression
-                .builder()
-                    .advId(advId)
-                    .sourceId(sourceId)
-                    .clientId(clientId)
-                    .campaignId(campaignId)
-                    .creativeId(creativeId)
-                    .timestamp(minute)
-                    .count(count)
-                .build();
+                                .builder()
+                                    .uuid(uuid)
+                                    .advId(advId)
+                                    .sourceId(sourceId)
+                                    .clientId(clientId)
+                                    .campaignId(campaignId)
+                                    .creativeId(creativeId)
+                                    .timestamp(minute)
+                                    .count(count)
+                                .build();
         collector.collect(aggregation);
     }
 }

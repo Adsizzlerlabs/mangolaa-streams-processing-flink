@@ -10,6 +10,7 @@ import org.apache.flink.streaming.api.windowing.windows.TimeWindow;
 import org.apache.flink.util.Collector;
 
 import java.time.ZonedDateTime;
+import java.util.UUID;
 
 /**
  * Created by ankushsharma on 12/03/18.
@@ -40,9 +41,11 @@ public class ClickCountFunction implements WindowFunction<Click, AggregatedClick
         val platform = (String) keys.getField(11);
 
         val count = Iterables.size(clicks);
+        val uuid = UUID.randomUUID();
 
         val aggregation = AggregatedClick
                             .builder()
+                                .uuid(uuid)
                                 .advId(advId)
                                 .sourceId(sourceId)
                                 .clientId(clientId)
