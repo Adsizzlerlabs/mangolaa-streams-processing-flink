@@ -22,11 +22,14 @@ import java.util.Properties;
 
 public class StreamingJob {
 
+	private static final String ROCKS_DB_CHECKPOINT_URI = "";
+	private static final boolean ENABLE_INCREMENTAL_CHECKPOINT = true;
+	
 	public static void main(String[] args) throws Exception {
 		val flinkEnv = StreamExecutionEnvironment.getExecutionEnvironment();
 
 		//Using RocksDB backend.
-		flinkEnv.setStateBackend(new RocksDBStateBackend("file:///data/flink/checkpoints"));
+		flinkEnv.setStateBackend(new RocksDBStateBackend(ROCKS_DB_CHECKPOINT_URI, ENABLE_INCREMENTAL_CHECKPOINT));
 
 		// Deserializers
 		val bidReqGzipJsonDeserializer = new BidReqGzipJsonDeserializer();
