@@ -1,7 +1,7 @@
 package com.adsizzler.mangolaa.streams.utils;
 
 
-import org.apache.flink.shaded.jackson2.com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
  * Created by Ankush on 17/07/17.

@@ -28,7 +28,6 @@ public class BidRespGzipJsonDeserializer implements DeserializationSchema<BidRes
             catch (final Exception e) {
                 log.error("", e.getMessage());
             }
-
         }
         return bidResp;
     }

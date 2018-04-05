@@ -22,9 +22,9 @@ import java.util.Properties;
 
 public class StreamingJob {
 
-	private static final String ROCKS_DB_CHECKPOINT_URI = "";
+	private static final String ROCKS_DB_CHECKPOINT_URI = "file:///data/flink/checkpoints";
 	private static final boolean ENABLE_INCREMENTAL_CHECKPOINT = true;
-	
+
 	public static void main(String[] args) throws Exception {
 		val flinkEnv = StreamExecutionEnvironment.getExecutionEnvironment();
 

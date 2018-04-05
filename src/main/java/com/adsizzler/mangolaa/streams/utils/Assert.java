@@ -7,7 +7,6 @@ import java.util.Objects;
  */
 public class Assert {
 
-
     private Assert(){}
 
     public static <T> void notNull(final T t , final String errorMsg) {
@@ -15,5 +14,4 @@ public class Assert {
             throw new IllegalArgumentException(errorMsg);
         }
     }
-
 }
